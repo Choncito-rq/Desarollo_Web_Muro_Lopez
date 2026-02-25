@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Préstamo</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #eeeeee;
+        }
+
+        form{
+            background-color: white;
+            width: 400px;
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #cccccc;
+        }
+
+        h2, h3{
+            color: #5a4fcf; /* azul/morado */
+        }
+
+        input, textarea{
+            width: 95%;
+            padding: 4px;
+            margin-top: 3px;
+            margin-bottom: 10px;
+            border: 1px solid #999999;
+        }
+
+        input[type="radio"]{
+            width: auto;
+        }
+
+        input[type="submit"],
+        input[type="reset"]{
+            background-color: #5a4fcf;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+
+        input[type="reset"]{
+            background-color: gray;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<form>
+
+<h2>Formulario de Préstamo</h2>
+
+Nombre:<br>
+<textarea name="nombre" rows="3"></textarea>
+
+Carrera:<br>
+<input type="text" name="carrera">
+
+Grupo:<br>
+<input type="text" name="grupo">
+
+Tipo de usuario:<br>
+Alumno <input type="radio" name="tipo" value="Alumno">
+Profesor <input type="radio" name="tipo" value="Profesor">
+<br><br>
+
+Material en préstamo:<br>
+<textarea name="prestamo" rows="3"></textarea>
+
+<h3>Hora de préstamo</h3>
+
+Fecha:<br>
+<input type="date" name="fecha_prestamo">
+
+Hora:<br>
+<input type="time" name="hora_prestamo">
+
+Firma:<br>
+<input type="text" name="firma_prestamo">
+
+<h3>Hora de entrega</h3>
+
+Fecha:<br>
+<input type="date" name="fecha_entrega">
+
+Hora:<br>
+<input type="time" name="hora_entrega">
+
+Firma:<br>
+<input type="text" name="firma_entrega">
+
+<br>
+
+<input type="submit" value="Enviar">
+<input type="reset" value="Limpiar">
+
+</form>
+
+</body>
+</html>
