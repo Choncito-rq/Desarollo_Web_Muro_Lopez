@@ -1,106 +1,609 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Formulario de Préstamo</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FIM UAS — Facultad de Ingeniería Mochis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Epilogue:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --azul:      #1B3A6B;
+      --azul-vivo: #2251A3;
+      --azul-claro:#EEF2FA;
+      --negro:     #0E0E0E;
+      --gris:      #6B6B6B;
+      --linea:     #D4D4D4;
+      --fondo:     #F8F8F6;
+      --blanco:    #FFFFFF;
+    }
 
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background-color: #eeeeee;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-        form{
-            background-color: white;
-            width: 400px;
-            margin: 20px auto;
-            padding: 15px;
-            border: 1px solid #cccccc;
-        }
+    body {
+      font-family: 'Epilogue', sans-serif;
+      background: var(--blanco);
+      color: var(--negro);
+    }
 
-        h2, h3{
-            color: #5a4fcf; /* azul/morado */
-        }
+    /* ─── TOPBAR ─── */
+    .topbar {
+      border-bottom: 1px solid var(--linea);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .55rem 3rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      color: var(--gris);
+    }
+    .topbar a { color: var(--gris); text-decoration: none; }
+    .topbar a:hover { color: var(--azul-vivo); text-decoration: underline; }
+    .topbar-links { display: flex; gap: 2rem; }
+    .topbar-tag {
+      background: var(--azul);
+      color: white;
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem; padding: .2rem .6rem; letter-spacing: .06em;
+    }
 
-        input, textarea{
-            width: 95%;
-            padding: 4px;
-            margin-top: 3px;
-            margin-bottom: 10px;
-            border: 1px solid #999999;
-        }
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--blanco);
+      border-bottom: 2px solid var(--negro);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3rem;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .nav-sigla {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.6rem;
+      color: var(--azul);
+      line-height: 1;
+      border-right: 2px solid var(--linea);
+      padding-right: 1rem;
+    }
+    .nav-nombre { display: flex; flex-direction: column; gap: .1rem; }
+    .nav-nombre span:first-child { font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--negro); }
+    .nav-nombre span:last-child { font-family: 'DM Mono', monospace; font-size: .62rem; color: var(--gris); letter-spacing: .06em; }
+    .nav-links { display: flex; align-items: center; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: .82rem; font-weight: 500;
+      color: var(--negro); padding: .5rem 1rem;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--azul-vivo); }
+    .nav-links li:last-child a {
+      background: var(--negro); color: var(--blanco);
+      padding: .52rem 1.2rem; font-weight: 700;
+    }
+    .nav-links li:last-child a:hover { background: var(--azul); }
 
-        input[type="radio"]{
-            width: auto;
-        }
+    /* ─── ALERT ─── */
+    .alert {
+      background: var(--azul-claro);
+      border-bottom: 1px solid #c5d3ee;
+      padding: .6rem 3rem;
+      display: flex; align-items: center; gap: 1rem;
+      font-size: .78rem; color: var(--azul);
+    }
+    .alert strong { font-weight: 700; }
+    .alert a { color: var(--azul-vivo); font-weight: 600; }
+    .alert-dot { width: 7px; height: 7px; background: var(--azul-vivo); border-radius: 50%; flex-shrink: 0; }
 
-        input[type="submit"],
-        input[type="reset"]{
-            background-color: #5a4fcf;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            cursor: pointer;
-        }
+    /* ─── HERO ─── */
+    .hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--negro);
+      min-height: 88vh;
+    }
+    .hero-left {
+      padding: 6rem 3rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 2px solid var(--negro);
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem; letter-spacing: .12em; color: var(--gris);
+      text-transform: uppercase; margin-bottom: 1.8rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gris); }
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      line-height: 1.0; color: var(--negro); margin-bottom: 2rem;
+    }
+    .hero-title em { font-style: italic; color: var(--azul); }
+    .hero-desc {
+      font-size: .95rem; color: var(--gris);
+      line-height: 1.75; max-width: 420px; margin-bottom: 2.8rem;
+      border-left: 2px solid var(--azul); padding-left: 1rem;
+    }
+    .hero-btns { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.5rem;
+      font-family: 'Epilogue', sans-serif;
+      font-size: .82rem; font-weight: 700;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: transform .12s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-solid { background: var(--negro); color: var(--blanco); border: 2px solid var(--negro); }
+    .btn-solid:hover { background: var(--azul); border-color: var(--azul); }
+    .btn-ghost { background: transparent; color: var(--negro); border: 2px solid var(--negro); }
+    .btn-ghost:hover { background: var(--negro); color: var(--blanco); }
 
-        input[type="reset"]{
-            background-color: gray;
-        }
-    </style>
+    .hero-stats {
+      display: flex; margin-top: 4rem;
+      border-top: 1px solid var(--linea); padding-top: 2rem;
+    }
+    .hero-stat { padding-right: 2.5rem; margin-right: 2.5rem; border-right: 1px solid var(--linea); }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat strong {
+      display: block; font-family: 'Instrument Serif', serif;
+      font-size: 2.6rem; color: var(--azul); line-height: 1;
+    }
+    .hero-stat span {
+      font-family: 'DM Mono', monospace;
+      font-size: .64rem; color: var(--gris); letter-spacing: .06em; text-transform: uppercase;
+    }
 
+    /* ─── HERO DERECHA ─── */
+    .hero-right {
+      background: var(--azul);
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 3rem; gap: 1px;
+    }
+    .hero-right-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem; letter-spacing: .12em; color: rgba(255,255,255,.4);
+      text-transform: uppercase; margin-bottom: .75rem;
+    }
+    .hero-card {
+      background: var(--blanco); padding: 1.4rem 1.6rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+      animation: fadeUp .5s ease both;
+    }
+    .hero-card:nth-child(2) { animation-delay: .1s; background: var(--fondo); }
+    .hero-card:nth-child(3) { animation-delay: .2s; }
+    .hc-num {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem; color: var(--azul-vivo); margin-top: .2rem; flex-shrink: 0;
+    }
+    .hc-body h4 { font-size: .88rem; font-weight: 700; margin-bottom: .25rem; }
+    .hc-body p { font-size: .76rem; color: var(--gris); line-height: 1.5; }
+
+    /* ─── SECTIONS ─── */
+    section { border-bottom: 2px solid var(--negro); }
+    .sec-inner { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem; }
+    .sec-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; align-items: end; margin-bottom: 3.5rem;
+    }
+    .sec-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; letter-spacing: .12em;
+      color: var(--azul-vivo); text-transform: uppercase; margin-bottom: .6rem;
+    }
+    .sec-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.05; color: var(--negro);
+    }
+    .sec-title em { font-style: italic; color: var(--azul); }
+    .sec-desc { font-size: .9rem; color: var(--gris); line-height: 1.7; align-self: end; }
+    .link-ver {
+      font-size: .8rem; font-weight: 700; color: var(--negro);
+      text-decoration: none; display: inline-flex; align-items: center; gap: .35rem;
+      border-bottom: 1px solid var(--negro); padding-bottom: .15rem;
+    }
+    .link-ver:hover { color: var(--azul-vivo); border-color: var(--azul-vivo); }
+
+    /* ─── CARRERAS ─── */
+    .carreras-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 2px solid var(--negro);
+    }
+    .carrera-card {
+      padding: 2rem; border-right: 2px solid var(--negro); border-bottom: 2px solid var(--negro);
+      text-decoration: none; color: inherit;
+      transition: background .15s; display: block;
+    }
+    .carrera-card:nth-child(3n) { border-right: none; }
+    .carrera-card:nth-last-child(-n+3) { border-bottom: none; }
+    .carrera-card:hover { background: var(--azul-claro); }
+    .carrera-num {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem; color: var(--azul-vivo); letter-spacing: .1em; margin-bottom: 1.2rem;
+    }
+    .carrera-card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.2rem; line-height: 1.2; margin-bottom: .6rem;
+    }
+    .carrera-card p { font-size: .8rem; color: var(--gris); line-height: 1.6; margin-bottom: 1rem; }
+    .carrera-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem; letter-spacing: .06em;
+      color: var(--azul); border: 1px solid #c5d3ee;
+      padding: .2rem .6rem; background: var(--azul-claro); display: inline-block;
+    }
+
+    /* ─── NOTICIAS ─── */
+    .noticias-bg { background: var(--fondo); }
+    .noticias-grid {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 2px; background: var(--negro); border: 2px solid var(--negro);
+    }
+    .noticia-card {
+      background: var(--blanco); padding: 2rem;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; transition: background .15s;
+    }
+    .noticia-card:hover { background: var(--azul-claro); }
+    .noticia-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--azul-vivo); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .noticia-cat::before { content: ''; display: block; width: 16px; height: 1px; background: var(--azul-vivo); }
+    .noticia-card h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.05rem; line-height: 1.3; margin-bottom: .7rem; flex: 1;
+    }
+    .noticia-card:first-child h3 { font-size: 1.4rem; }
+    .noticia-card p { font-size: .78rem; color: var(--gris); line-height: 1.6; }
+    .noticia-date {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem; color: var(--gris); margin-top: 1.5rem; letter-spacing: .06em;
+    }
+
+    /* ─── SERVICIOS ─── */
+    .servicios-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border: 2px solid var(--negro);
+    }
+    .servicio-card {
+      padding: 1.8rem; border-right: 2px solid var(--negro); border-bottom: 2px solid var(--negro);
+      text-decoration: none; color: inherit; transition: background .15s;
+    }
+    .servicio-card:nth-child(4n) { border-right: none; }
+    .servicio-card:nth-last-child(-n+4) { border-bottom: none; }
+    .servicio-card:hover { background: var(--azul-claro); }
+    .s-index {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem; color: var(--linea); margin-bottom: 1.2rem; letter-spacing: .1em;
+    }
+    .servicio-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: .4rem; }
+    .servicio-card p { font-size: .76rem; color: var(--gris); line-height: 1.55; }
+
+    /* ─── CTA ─── */
+    .cta-bg { background: var(--azul); border-bottom: none; }
+    .cta-inner {
+      max-width: 1200px; margin: 0 auto; padding: 5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 4rem;
+    }
+    .cta-inner h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem); color: var(--blanco); line-height: 1.05;
+    }
+    .cta-inner h2 em { font-style: italic; color: rgba(255,255,255,.5); }
+    .cta-actions { display: flex; gap: .75rem; flex-shrink: 0; }
+    .btn-white { background: var(--blanco); color: var(--negro); border: 2px solid var(--blanco); }
+    .btn-white:hover { background: var(--azul-claro); }
+    .btn-white-ghost { background: transparent; color: var(--blanco); border: 2px solid rgba(255,255,255,.4); }
+    .btn-white-ghost:hover { border-color: white; background: rgba(255,255,255,.08); }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--negro); color: rgba(255,255,255,.5); padding: 4rem 3rem 2rem; }
+    .footer-top {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .f-brand-name { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: white; display: block; margin-bottom: .4rem; }
+    .f-brand-sub { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .08em; color: rgba(255,255,255,.3); display: block; margin-bottom: 1.2rem; }
+    .f-brand-desc { font-size: .8rem; line-height: 1.65; max-width: 260px; }
+    .f-col-title { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); display: block; margin-bottom: 1rem; }
+    .f-col ul { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+    .f-col a { font-size: .8rem; text-decoration: none; color: rgba(255,255,255,.45); transition: color .15s; }
+    .f-col a:hover { color: white; }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto; padding-top: 1.8rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { font-size: .72rem; font-family: 'DM Mono', monospace; letter-spacing: .04em; }
+    .f-socials { display: flex; gap: .5rem; }
+    .f-social {
+      width: 30px; height: 30px; border: 1px solid rgba(255,255,255,.15);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: border-color .15s, background .15s;
+    }
+    .f-social:hover { border-color: white; background: rgba(255,255,255,.08); }
+    .f-social svg { width: 13px; fill: rgba(255,255,255,.55); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .topbar-links, .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      nav, .sec-inner, .hero-left, .alert, .topbar { padding-left: 1.4rem; padding-right: 1.4rem; }
+      .sec-header { grid-template-columns: 1fr; }
+      .carreras-grid, .servicios-grid { grid-template-columns: 1fr 1fr; }
+      .noticias-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .cta-inner { flex-direction: column; }
+    }
+  </style>
 </head>
-
 <body>
 
-<form>
 
-<h2>Formulario de Préstamo</h2>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">
+      <span class="nav-sigla">FIM</span>
+      <div class="nav-nombre">
+        <span>Facultad de Ingeniería Mochis</span>
+        <span>Universidad Autónoma de Sinaloa</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Oferta Educativa</a></li>
+      <li><a href="#">Investigación</a></li>
+      <li><a href="#">Servicios</a></li>
+      <li><a href="#">Egresados</a></li>
+      <li><a href="#">Institución</a></li>
+      <li><a href="#">Admisiones</a></li>
+    </ul>
+  </nav>
 
-Nombre:<br>
-<textarea name="nombre" rows="3"></textarea>
+  <!-- HERO -->
+  <section class="hero" style="border-bottom:2px solid var(--negro);">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Desde 1972 formando ingeniebrios</p>
+      <h1 class="hero-title">
+        Ingeniería<br>que <em>construye</em><br>el futuro
+      </h1>
+      <p class="hero-desc">
+        La Facultad de Ingeniería Mochis ofrece programas acreditados con
+        vinculación internacional, laboratorios actualizados y docentes de alto nivel.
+      </p>
+      <div class="hero-btns">
+        <a href="#carreras" class="btn btn-solid">Ver carreras →</a>
+        <a href="#" class="btn btn-ghost">Proceso de admisión</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>+50</strong>
+          <span>años de historia</span>
+        </div>
+        <div class="hero-stat">
+          <strong>6</strong>
+          <span>programas</span>
+        </div>
+        <div class="hero-stat">
+          <strong>+5k</strong>
+          <span>egresados</span>
+        </div>
+      </div>
+    </div>
 
-Carrera:<br>
-<input type="text" name="carrera">
+    <div class="hero-right">
+      <p class="hero-right-label">Destacados recientes</p>
+      <div class="hero-card">
+        <span class="hc-num">01</span>
+        <div class="hc-body">
+          <h4>Noticias de la Universidad</h4>
+          <p>... </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-Grupo:<br>
-<input type="text" name="grupo">
+  <!-- CARRERAS -->
+  <section id="carreras">
+    <div class="sec-inner">
+      <div class="sec-header">
+        <div>
+          <p class="sec-label">Oferta Educativa</p>
+          <h2 class="sec-title">Elige tu <em>carrera</em></h2>
+        </div>
+        <div>
+          <p class="sec-desc">Programas de licenciatura y posgrado con reconocimiento nacional, enfoque práctico y vinculación con el sector productivo.</p>
+          <br>
+          <a href="#" class="link-ver">Ver todos los planes de estudio →</a>
+        </div>
+      </div>
+      <div class="carreras-grid">
+        <a class="carrera-card" href="#">
+          <p class="carrera-num">01 — LICENCIATURA</p>
+          <h3>Ingeniería Civil</h3>
+          <p>Diseño y construcción de infraestructura urbana y rural. Puentes, edificios, hidráulica y gestión de obras.</p>
+          <span class="carrera-tag">Plan V · Plan 2022</span>
+        </a>
+        <a class="carrera-card" href="#">
+          <p class="carrera-num">02 — LICENCIATURA</p>
+          <h3>Ingeniería Geodésica</h3>
+          <p>Medición y representación del territorio. Topografía, geomática y sistemas de información geográfica.</p>
+          <span class="carrera-tag">Plan III · Plan 2022</span>
+        </a>
+        <a class="carrera-card" href="#">
+          <p class="carrera-num">03 — LICENCIATURA</p>
+          <h3>Ingeniería de Software</h3>
+          <p>Desarrollo de sistemas, arquitectura de software, IA y metodologías ágiles. Disponible en modalidad virtual.</p>
+          <span class="carrera-tag">Presencial · Virtual</span>
+        </a>
+        <a class="carrera-card" href="#">
+          <p class="carrera-num">04 — LICENCIATURA</p>
+          <h3>Ing. en Procesos Industriales</h3>
+          <p>Optimización y automatización de procesos productivos para la industria moderna y manufactura avanzada.</p>
+          <span class="carrera-tag">Plan 2022</span>
+        </a>
+        <a class="carrera-card" href="#">
+          <p class="carrera-num">05 — LICENCIATURA</p>
+          <h3>Ing. en Nanotecnología y Energías Renovables</h3>
+          <p>Nanomateriales, energía solar y eólica. Formación orientada a la transición energética del país.</p>
+          <span class="carrera-tag">Innovación</span>
+        </a>
+        <a class="carrera-card" href="#">
+          <p class="carrera-num">06 — POSGRADO</p>
+          <h3>Maestría y Doctorado</h3>
+          <p>Programas de investigación en Ciencias de la Ingeniería para el desarrollo científico de alto impacto.</p>
+          <span class="carrera-tag">MCE · DCI</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-Tipo de usuario:<br>
-Alumno <input type="radio" name="tipo" value="Alumno">
-Profesor <input type="radio" name="tipo" value="Profesor">
-<br><br>
+  <!-- NOTICIAS -->
+  <section class="noticias-bg">
+    <div class="sec-inner">
+      <div class="sec-header">
+        <div>
+          <p class="sec-label">Noticias y Eventos</p>
+          <h2 class="sec-title"><em>Orgullo</em> FIM</h2>
+        </div>
+        <div>
+          <p class="sec-desc">Lo más reciente de nuestra comunidad de estudiantes, profesores e investigadores.</p>
+          <br>
+          <a href="#" class="link-ver">Ver todas las noticias →</a>
+        </div>
+      </div>
+      <div class="noticias-grid">
+        <a class="noticia-card" href="#">
+          <p class="noticia-cat">Lo que sea</p>
+          <h3>Pagina de la UAS funcional y bonita</h3>
+          <p>Chon trata de hacer la pagina de la UAS mas estetica y adecuada para daltonicos</p>
+          <p class="noticia-date">7 de Marzo 2025</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
-Material en préstamo:<br>
-<textarea name="prestamo" rows="3"></textarea>
+  <!-- SERVICIOS -->
+  <section>
+    <div class="sec-inner">
+      <div class="sec-header">
+        <div>
+          <p class="sec-label">Servicios</p>
+          <h2 class="sec-title">Todo lo que<br><em>necesitas</em></h2>
+        </div>
+        <p class="sec-desc">Acceso directo a los servicios académicos, escolares y de apoyo que ofrece la Facultad de Ingeniería Mochis.</p>
+      </div>
+      <div class="servicios-grid">
+        <a class="servicio-card" href="#">
+          <p class="s-index">01</p>
+          <h4>Tutorías</h4>
+          <p>Sistema de tutores y asesores pares para apoyo académico personalizado.</p>
+        </a>
+        <a class="servicio-card" href="#">
+          <p class="s-index">02</p>
+          <h4>Servicios Escolares</h4>
+          <p>Trámites académicos, normatividad y seguro facultativo desde SIIA.</p>
+        </a>
+        <a class="servicio-card" href="#">
+          <p class="s-index">03</p>
+          <h4>Plataforma Virtual</h4>
+          <p>Accede a Moodle para cursos, materiales y actividades en línea.</p>
+        </a>
+        <a class="servicio-card" href="#">
+          <p class="s-index">04</p>
+          <h4>Titulación</h4>
+          <p>Comisión Académica: requisitos, modalidades y seguimiento de proceso.</p>
+        </a>
+        <a class="servicio-card" href="#">
+          <p class="s-index">05</p>
+          <h4>Servicio Social</h4>
+          <p>Realiza tu servicio en instituciones y proyectos vinculados a la FIM.</p>
+        </a>
+        <a class="servicio-card" href="#">
+          <p class="s-index">06</p>
+          <h4>Prácticas Profesionales</h4>
+          <p>Vinculación con el sector productivo y registro de empresas colaboradoras.</p>
+        </a>
+        <a class="servicio-card" href="#">
+          <p class="s-index">07</p>
+          <h4>Bolsa de Trabajo</h4>
+          <p>Oportunidades laborales vigentes para egresados y próximos a egresar.</p>
+        </a>
+        <a class="servicio-card" href="#">
+          <p class="s-index">08</p>
+          <h4>Cuerpos Académicos</h4>
+          <p>Grupos de investigación, líneas de conocimiento y colaboraciones.</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
-<h3>Hora de préstamo</h3>
+  <!-- CTA -->
+  <section class="cta-bg">
+    <div class="cta-inner">
+      <h2>¿Listo para ser<br>parte de la <em>FIM?</em></h2>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-white">Solicitar información →</a>
+        <a href="#" class="btn btn-white-ghost">Descargar folleto</a>
+      </div>
+    </div>
+  </section>
 
-Fecha:<br>
-<input type="date" name="fecha_prestamo">
-
-Hora:<br>
-<input type="time" name="hora_prestamo">
-
-Firma:<br>
-<input type="text" name="firma_prestamo">
-
-<h3>Hora de entrega</h3>
-
-Fecha:<br>
-<input type="date" name="fecha_entrega">
-
-Hora:<br>
-<input type="time" name="hora_entrega">
-
-Firma:<br>
-<input type="text" name="firma_entrega">
-
-<br>
-
-<input type="submit" value="Enviar">
-<input type="reset" value="Limpiar">
-
-</form>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <span class="f-brand-name">Facultad de Ingeniería Mochis</span>
+        <span class="f-brand-sub">FIM · Universidad Autónoma de Sinaloa</span>
+        <p class="f-brand-desc">Blvd. Juan de Dios Bátiz s/n<br>Los Mochis, Sinaloa, México<br>Tel. (668) 812-0550</p>
+      </div>
+      <div class="f-col">
+        <span class="f-col-title">Carreras</span>
+        <ul>
+          <li><a href="#">Ingeniería Civil</a></li>
+          <li><a href="#">Ingeniería Geodésica</a></li>
+          <li><a href="#">Ing. de Software</a></li>
+          <li><a href="#">Ing. Procesos Ind.</a></li>
+          <li><a href="#">Nanotecnología</a></li>
+          <li><a href="#">Posgrado</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <span class="f-col-title">Servicios</span>
+        <ul>
+          <li><a href="#">Servicios Escolares</a></li>
+          <li><a href="#">Titulación</a></li>
+          <li><a href="#">Tutorías</a></li>
+          <li><a href="#">Servicio Social</a></li>
+          <li><a href="#">Bolsa de Trabajo</a></li>
+          <li><a href="#">Moodle</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <span class="f-col-title">Institución</span>
+        <ul>
+          <li><a href="#">Misión y Visión</a></li>
+          <li><a href="#">Directorio</a></li>
+          <li><a href="#">Transparencia</a></li>
+          <li><a href="#">Calendario Escolar</a></li>
+          <li><a href="#">Modelo Educativo</a></li>
+          <li><a href="#">Radio UAS</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 FIM UAS — Todos los derechos reservados</p>
+      <div class="f-socials">
+        <a href="#" class="f-social"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="#" class="f-social"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a href="#" class="f-social"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0E0E0E"/></svg></a>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
