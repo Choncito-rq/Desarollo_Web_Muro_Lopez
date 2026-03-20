@@ -1,48 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Operaciones Aritméticas en JavaScript</title>
+  <title>Calculadora con Formulario</title>
 </head>
 <body>
 
-  <h1>Operaciones Aritméticas en JavaScript</h1>
+  <h1>Operaciones Aritméticas</h1>
   <p>Sean Muro Lopez - 301 - Ingenieria en Software</p>
 
-  <h2>Variables</h2>
-  <p id="variables"></p>
+  <br>
 
-  <h2>Suma</h2>
-  <p id="suma"></p>
+  <!-- Cajas de texto para ingresar los valores -->
+  <label>Valor de A: </label>
+  <input type="number" id="a" value="10">
+  <br><br>
+  <label>Valor de B: </label>
+  <input type="number" id="b" value="2">
 
-  <h2>Resta</h2>
-  <p id="resta"></p>
+  <br><br>
 
-  <h2>División</h2>
-  <p id="division"></p>
+  <!-- Botones para cada operación -->
+  <button onclick="sumar()">Suma</button>
+  <button onclick="restar()">Resta</button>
+  <button onclick="dividir()">División</button>
+  <button onclick="exponenciar()">Exponenciación</button>
 
-  <h2>Exponenciación</h2>
-  <p id="exponenciacion"></p>
+  <br><br>
+
+  <!-- Aquí se muestra el resultado -->
+  <p id="resultado"></p>
 
   <script>
 
-    // Declaración de variables
-    var a = 10;
-    var b = 2;
+    function sumar() {
+      var a = Number(document.getElementById("a").value);
+      var b = Number(document.getElementById("b").value);
+      document.getElementById("resultado").innerHTML = "Suma: " + a + " + " + b + " = " + (a + b);
+    }
 
-    // Mostrar variables
-    document.getElementById("variables").innerHTML = "a = " + a + " | b = " + b;
+    function restar() {
+      var a = Number(document.getElementById("a").value);
+      var b = Number(document.getElementById("b").value);
+      document.getElementById("resultado").innerHTML = "Resta: " + a + " - " + b + " = " + (a - b);
+    }
 
-    // Suma
-    document.getElementById("suma").innerHTML = a + " + " + b + " = " + (a + b);
+    function dividir() {
+      var a = Number(document.getElementById("a").value);
+      var b = Number(document.getElementById("b").value);
+      document.getElementById("resultado").innerHTML = "División: " + a + " / " + b + " = " + (a / b);
+    }
 
-    // Resta
-    document.getElementById("resta").innerHTML = a + " - " + b + " = " + (a - b);
-
-    // División
-    document.getElementById("division").innerHTML = a + " / " + b + " = " + (a / b);
-
-    // Exponenciación
-    document.getElementById("exponenciacion").innerHTML = a + " ** " + b + " = " + (a ** b);
+    function exponenciar() {
+      var a = Number(document.getElementById("a").value);
+      var b = Number(document.getElementById("b").value);
+      document.getElementById("resultado").innerHTML = "Exponenciación: " + a + " ** " + b + " = " + (a ** b);
+    }
 
   </script>
 
