@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Salidas en JavaScript</title>
+  <title>Operaciones Aritméticas en JavaScript</title>
 </head>
 <body>
 
-  <h1>Métodos de salida en JavaScript</h1>
-  <p>Mis datos personales mostrados de diferentes formas:</p>
+  <h1>Operaciones Aritméticas en JavaScript</h1>
+  <p>Sean Muro Lopez - 301 - Ingenieria en Software</p>
 
-  <!-- Método 1: innerHTML -->
-  <h2>1. innerHTML</h2>
-  <p id="datos"></p>
+  <h2>Variables</h2>
+  <p id="variables"></p>
 
-  <!-- Método 2: document.write -->
-  <h2>2. document.write</h2>
-  <p>Nombre: Sean Muro Lopez</p>
-  <p>Grupo: 301</p>
-  <p>Carrera: Ingenieria en Software</p>
+  <h2>Suma</h2>
+  <p id="suma"></p>
 
-  <!-- Método 3: window.alert -->
-  <h2>3. window.alert</h2>
-  <p>Al cargar la página aparece un cuadro de alerta con los datos.</p>
+  <h2>Resta</h2>
+  <p id="resta"></p>
 
-  <!-- Método 4: console.log -->
-  <h2>4. console.log</h2>
-  <p>Abre la consola del navegador (F12) para ver los datos.</p>
+  <h2>División</h2>
+  <p id="division"></p>
+
+  <h2>Exponenciación</h2>
+  <p id="exponenciacion"></p>
 
   <script>
 
-    // Método 1: innerHTML
-    document.getElementById("datos").innerHTML = "Nombre: Sean Muro Lopez <br> Grupo: 301 <br> Carrera: Ingenieria en Software";
+    // Declaración de variables
+    var a = 10;
+    var b = 2;
 
-    // Método 3: window.alert
-    window.alert("Nombre: Sean Muro Lopez \nGrupo: 301 \nCarrera: Ingenieria en Software");
+    // Mostrar variables
+    document.getElementById("variables").innerHTML = "a = " + a + " | b = " + b;
 
-    // Método 4: console.log
-    console.log("Nombre: Sean Muro Lopez");
-    console.log("Grupo: 301");
-    console.log("Carrera: Ingenieria en Software");
+    // Suma
+    document.getElementById("suma").innerHTML = a + " + " + b + " = " + (a + b);
+
+    // Resta
+    document.getElementById("resta").innerHTML = a + " - " + b + " = " + (a - b);
+
+    // División
+    document.getElementById("division").innerHTML = a + " / " + b + " = " + (a / b);
+
+    // Exponenciación
+    document.getElementById("exponenciacion").innerHTML = a + " ** " + b + " = " + (a ** b);
 
   </script>
 
