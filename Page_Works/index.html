@@ -1,75 +1,117 @@
 <!DOCTYPE html>
+//MADE IN BY CHONCITO yies yies
 <html>
 <head>
-  <title>Calculadora de IMC - Mujer</title>
+  <title>Tablas de Multiplicar</title>
+  <style>
+    body {
+      background-color: #cccccc;
+      font-family: Arial;
+      margin: 20px;
+    }
+
+    h1 {
+      color: navy;
+      text-decoration: underline;
+    }
+
+    input {
+      border: 2px solid black;
+      padding: 3px;
+      width: 80px;
+    }
+
+    button {
+      background-color: gray;
+      color: white;
+      border: 3px outset #888;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:active {
+      border-style: inset;
+    }
+
+    #resultado {
+      margin-top: 20px;
+    }
+
+    .tabla {
+      display: inline-block;
+      border: 2px solid black;
+      margin: 5px;
+      padding: 8px;
+      background-color: white;
+      vertical-align: top;
+      width: 160px;
+    }
+
+    .tabla h3 {
+      color: red;
+      margin: 0 0 5px 0;
+      font-size: 14px;
+      border-bottom: 1px solid black;
+    }
+
+    .tabla p {
+      margin: 2px 0;
+      font-size: 13px;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Calculadora de Índice de Masa Corporal (IMC)</h1>
-  <p>Sean Muro Lopez - 301 - Ingenieria en Software</p>
+  <h1>Generador de Tablas de Multiplicar</h1>
 
-  <br>
-
+  <p>Ingresa un número positivo y entero:</p>
+  <input type="number" id="numero" min="1" placeholder="Ej: 10">
   <br><br>
+  <button onclick="generarTablas()">Generar tablas de multiplicar</button>
 
-  <!-- Formulario -->
-  <label>Peso (kg): </label>
-  <input type="number" id="peso" placeholder="Ej. 60">
-  <br><br>
-
-  <label>Altura (m): </label>
-  <input type="number" id="altura" placeholder="Ej. 1.65" step="0.01">
-  <br><br>
-
-  <button onclick="calcularIMC()">Calcular IMC</button>
-
-  <br><br>
-
-  <!-- Resultado -->
-  <p id="resultado"></p>
-  <p id="grado"></p>
+  <div id="resultado"></div>
 
   <script>
+    function generarTablas() {
+      var contenedor = document.getElementById("resultado");
+      contenedor.innerHTML = "";
 
-    function calcularIMC() {
+      var entrada = document.getElementById("numero").value;
+      var n = parseInt(entrada);
 
-      var peso = Number(document.getElementById("peso").value);
-      var altura = Number(document.getElementById("altura").value);
-
-      // Validar que los campos no estén vacíos
-      if (peso == 0 || altura == 0) {
-        document.getElementById("resultado").innerHTML = "Por favor ingresa el peso y la altura.";
-        document.getElementById("grado").innerHTML = "";
+      // Validar que sea un número positivo y entero
+      if (entrada === "" || isNaN(n) || n <= 0 || n !== parseFloat(entrada)) {
+        contenedor.innerHTML = "<p class='error'>Por favor ingresa un número entero positivo válido.</p>";
         return;
       }
 
-      // Fórmula del IMC: peso / (altura * altura)
-      var imc = peso / (altura * altura);
-      imc = Math.round(imc * 100) / 100;
+      // Ciclo FOR: recorre del 1 al número ingresado
+      for (var i = 1; i <= n; i++) {
+        var div = document.createElement("div");
+        div.className = "tabla";
 
-      document.getElementById("resultado").innerHTML = "Tu IMC es: " + imc;
+        var titulo = document.createElement("h3");
+        titulo.textContent = "Tabla del " + i;
+        div.appendChild(titulo);
 
-      // Clasificación para mujeres
-      var grado = "";
+        // Ciclo WHILE: genera los 10 renglones de cada tabla
+        var j = 1;
+        while (j <= 10) {
+          var p = document.createElement("p");
+          p.textContent = i + " × " + j + " = " + (i * j);
+          div.appendChild(p);
+          j++;
+        }
 
-      if (imc < 18.5) {
-        grado = "Bajo peso";
-      } else if (imc >= 18.5 && imc <= 24.9) {
-        grado = "Peso normal";
-      } else if (imc >= 25 && imc <= 29.9) {
-        grado = "Sobrepeso";
-      } else if (imc >= 30 && imc <= 34.9) {
-        grado = "Obesidad grado I";
-      } else if (imc >= 35 && imc <= 39.9) {
-        grado = "Obesidad grado II";
-      } else {
-        grado = "Obesidad grado III (mórbida)";
+        contenedor.appendChild(div);
       }
-
-      document.getElementById("grado").innerHTML = "Clasificación: " + grado;
-
     }
-
   </script>
 
 </body>
