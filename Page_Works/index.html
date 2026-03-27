@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  //THIS IS ALSO DAME BY CHONCITO
+  //AGAIN THIS IS MADE CHONCITO good
 <head>
-  <title>Fecha Actual</title>
+  <title>Tablas del 1 al 10</title>
   <style>
     body {
       background-color: #cccccc;
@@ -15,64 +15,79 @@
       text-decoration: underline;
     }
 
-    #fecha {
-      border: 2px solid black;
-      background-color: white;
-      padding: 10px;
-      width: 400px;
-      font-size: 16px;
-      margin-top: 15px;
+    button {
+      background-color: gray;
+      color: white;
+      border: 3px outset #888;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 14px;
     }
 
-    p {
+    button:active {
+      border-style: inset;
+    }
+
+    #resultado {
+      margin-top: 20px;
+    }
+
+    .tabla {
+      display: inline-block;
+      border: 2px solid black;
+      margin: 5px;
+      padding: 8px;
+      background-color: white;
+      vertical-align: top;
+      width: 160px;
+    }
+
+    .tabla h3 {
+      color: red;
+      margin: 0 0 5px 0;
       font-size: 14px;
+      border-bottom: 1px solid black;
+    }
+
+    .tabla p {
+      margin: 2px 0;
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
 
-  <h1>Fecha Actual</h1>
-  <p>La fecha de hoy es:</p>
-  <div id="fecha"></div>
+  <h1>Tablas de Multiplicar del 1 al 10</h1>
+  <button onclick="generarTablas()">Generar tablas de multiplicar</button>
+
+  <div id="resultado"></div>
 
   <script>
-    var hoy = new Date();
+    function generarTablas() {
+      var contenedor = document.getElementById("resultado");
+      contenedor.innerHTML = "";
 
-    var numeroDia = hoy.getDay();       // 0=domingo ... 6=sábado
-    var numeroMes = hoy.getMonth();     // 0=enero ... 11=diciembre
-    var dia       = hoy.getDate();      // 1-31
-    var anio      = hoy.getFullYear();  // ej. 2026
+      // Ciclo FOR: recorre las tablas del 1 al 10
+      for (var i = 1; i <= 10; i++) {
+        var div = document.createElement("div");
+        div.className = "tabla";
 
-    var nombreDia;
-    switch (numeroDia) {
-      case 0: nombreDia = "domingo";    break;
-      case 1: nombreDia = "lunes";      break;
-      case 2: nombreDia = "martes";     break;
-      case 3: nombreDia = "miércoles";  break;
-      case 4: nombreDia = "jueves";     break;
-      case 5: nombreDia = "viernes";    break;
-      case 6: nombreDia = "sábado";     break;
+        var titulo = document.createElement("h3");
+        titulo.textContent = "Tabla del " + i;
+        div.appendChild(titulo);
+
+        // Ciclo WHILE: genera los renglones del 1 al 10
+        var j = 1;
+        while (j <= 10) {
+          var p = document.createElement("p");
+          p.textContent = i + " × " + j + " = " + (i * j);
+          div.appendChild(p);
+          j++;
+        }
+
+        contenedor.appendChild(div);
+      }
     }
-
-    var nombreMes;
-    switch (numeroMes) {
-      case 0:  nombreMes = "enero";      break;
-      case 1:  nombreMes = "febrero";    break;
-      case 2:  nombreMes = "marzo";      break;
-      case 3:  nombreMes = "abril";      break;
-      case 4:  nombreMes = "mayo";       break;
-      case 5:  nombreMes = "junio";      break;
-      case 6:  nombreMes = "julio";      break;
-      case 7:  nombreMes = "agosto";     break;
-      case 8:  nombreMes = "septiembre"; break;
-      case 9:  nombreMes = "octubre";    break;
-      case 10: nombreMes = "noviembre";  break;
-      case 11: nombreMes = "diciembre";  break;
-    }
-
-    var texto = "Hoy es " + nombreDia + " " + dia + " de " + nombreMes + " del año " + anio;
-
-    document.getElementById("fecha").textContent = texto;
   </script>
 
 </body>
