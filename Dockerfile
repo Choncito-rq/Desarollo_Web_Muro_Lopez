@@ -1,17 +1,14 @@
 FROM php:8.2-apache
 
-# Instalar extensiones necesarias
-RUN docker-php-ext-install mysqli pdo pdo_mysql
-
-# Establecer directorio de trabajo
-WORKDIR /var/www/html
-
-# Copiar archivos asegurando permisos
-COPY . .
-
-# Asegurar que Apache pueda leer los archivos
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html
-
-# Asegurar que Apache busque index.php por defecto
+# ESTA ES LA LÍNEA CLAVE: Activa el módulo de reescritura
 RUN a2enmod rewrite
+
+# Instalar extensiones (opcional, mantén lo que ya tenías)
+RUN docker-php-ext-install mysqli
+
+# Copiar configuración y archivos
+COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY . /var/www/html/
+
+# Permisos
+RUN chown -R www-data:www-data /var/www/html
