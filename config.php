@@ -1,13 +1,9 @@
 <?php
-$host = getenv('DB_HOST');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
-$db   = getenv('DB_NAME');
-
-// Validación estricta
-if (!$host || !$user || !$pass || !$db) {
-    die("Error: Variables de entorno no cargadas en el sistema.");
-}
+// Sustituye con tus datos reales de InfinityFree
+$host = "sql211.infinityfree.com"; 
+$user = "if0_42065518";
+$pass = "TU_CONTRASEÑA_DE_CPANEL"; // La contraseña que pusiste al crear la cuenta
+$db   = "if0_42065518_sistema_prestamos";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
