@@ -1,11 +1,17 @@
-# Usamos una imagen de PHP con Apache
 FROM php:8.2-apache
 
-# Instalamos extensiones necesarias (ejemplo: mysqli para conectar a base de datos)
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+# Instalar extensiones necesarias
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Copiamos nuestro código al directorio de Apache
-COPY . /var/www/html/
+# Establecer directorio de trabajo
+WORKDIR /var/www/html
 
-# Configuramos permisos
-RUN chown -R www-data:www-data /var/www/html
+# Copiar archivos asegurando permisos
+COPY . .
+
+# Asegurar que Apache pueda leer los archivos
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html
+
+# Asegurar que Apache busque index.php por defecto
+RUN a2enmod rewrite
